@@ -5,6 +5,7 @@ import (
 	"os"
 	"net/http"
 	"log"
+	"html/template"
 )
 // Page is a structure for holding a wiki page, describes how it will be stored.
 type Page struct {
@@ -32,12 +33,19 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 }
 
-func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w,"Hi")
+func editHandler(w http.ResponseWriter, r *http.Request) {
+	title := r.URL.Path[len("/edit/"):]
+	p, err := loadPage(title)
+	if err != nil {
+		p = &Page{Title: title}
+	}
+	t, _ := template.ParseFiles("edit.html")
+	t.Execute(w, p)
 }
 
 func main() {
 	fmt.Println("Starting server on port 4000")
 	http.HandleFunc("/view/", viewHandler)
+	http.HandleFunc("/edit/", editHandler)
 	log.Fatal(http.ListenAndServe(":4000", nil))
 }
