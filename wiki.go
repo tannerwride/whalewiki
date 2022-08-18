@@ -32,7 +32,12 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 }
 
+func home(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w,"Hi")
+}
+
 func main() {
-	http.HandleFunc("/view", viewHandler)
+	fmt.Println("Starting server on port 4000")
+	http.HandleFunc("/", viewHandler)
 	log.Fatal(http.ListenAndServe(":4000", nil))
 }
