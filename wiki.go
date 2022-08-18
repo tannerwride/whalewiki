@@ -38,6 +38,6 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	fmt.Println("Starting server on port 4000")
-	http.HandleFunc("/", viewHandler)
+	http.HandleFunc("/view/", viewHandler)
 	log.Fatal(http.ListenAndServe(":4000", nil))
 }
