@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+	"net/http"
+	"log"
 )
 // Page is a structure for holding a wiki page, describes how it will be stored.
 type Page struct {
@@ -24,9 +26,13 @@ func loadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+	title := r.URL.Path[len("/view/"):]
+	p, _ := loadPage(title)
+	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+}
+
 func main() {
-	f1 := &Page{Title: "Test", Body: []byte("Sample page, ok?")}
-	f1.save()
-	f2, _ := loadPage("Test")
-	fmt.Println(string(f2.Body))
+	http.HandleFunc("/view", viewHandler)
+	log.Fatal(http.ListenAndServe(":4000", nil))
 }
