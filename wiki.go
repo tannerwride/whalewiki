@@ -29,8 +29,12 @@ func loadPage(title string) (*Page, error) {
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/view/"):]
-	p, _ := loadPage(title)
-	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+	p, err := loadPage(title)
+	if err != nil {
+		http.Redirect(w, r, "/edit/"+title, http.StatusFound)
+	}
+	t, _ := template.ParseFiles("load.html")
+	t.Execute(w, p)
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request) {
