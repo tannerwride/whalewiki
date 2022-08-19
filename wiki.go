@@ -47,9 +47,18 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, p)
 }
 
+func saveHandler(w http.ResponseWriter, r *http.Request) {
+	title := r.URL.Path[len("/save"):]
+	body := r.FormValue("body")
+	p := &Page{Title: title, Body: []byte(body)}
+	p.save()
+	http.Redirect(w,r, "/view/"+title, http.StatusFound)
+}
+
 func main() {
 	fmt.Println("Starting server on port 4000")
 	http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/edit/", editHandler)
+	http.HandleFunc("/save/", saveHandler)
 	log.Fatal(http.ListenAndServe(":4000", nil))
 }
