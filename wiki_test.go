@@ -14,3 +14,13 @@ func TestPage(t *testing.T) {
 
 	}
 }
+
+func TestLoad(t *testing.T) {
+	got, err := loadPage("tweep")
+	want := "EOF"
+
+	if err == nil {
+		t.Errorf("got %q want %q", got, want)
+
+	}
+}
