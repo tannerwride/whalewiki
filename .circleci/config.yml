@@ -16,6 +16,7 @@ jobs:
   code_coverage:
     executor: go-executor
     steps:
+      - checkout
       - run:
           name: "Create a temp directory for artifacts"
           command: |
