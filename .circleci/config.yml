@@ -22,7 +22,5 @@ workflows:
   main_workflow:
       jobs:
         - build
-          filters: 
-            branches:
-              only: main
+          
                 
