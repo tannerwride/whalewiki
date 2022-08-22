@@ -6,6 +6,11 @@ jobs:
       - image: cimg/go:1.19.0
     steps:
       - checkout
+      - run: echo "Placholder job"
+  
+  code_coverage:
+    docker: 
+       - image: cimg/go:1.19.0
       - run:
           name: "Create a temp directory for artifacts"
           command: |
@@ -22,5 +27,8 @@ workflows:
   main_workflow:
       jobs:
         - build
+        - code_coverage:
+            requires: 
+              - build
           
                 
