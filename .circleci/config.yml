@@ -11,6 +11,7 @@ jobs:
   code_coverage:
     docker: 
        - image: cimg/go:1.19.0
+    steps:
       - run:
           name: "Create a temp directory for artifacts"
           command: |
