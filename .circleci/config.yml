@@ -41,6 +41,7 @@ jobs:
           name: "run unit tests and store results"
           command: |
             gotestsum --junitfile unit-tests.xml
+            mv unit-tests.xml /tmp/test-results
       - store_test_results:
           path: /tmp/test-results         
 
