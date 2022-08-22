@@ -51,5 +51,8 @@ workflows:
         - code_coverage:
             requires: 
               - build
+        - unit_testing:
+            requires:
+              - build
           
                 
