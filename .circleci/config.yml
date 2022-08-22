@@ -17,3 +17,10 @@ jobs:
             mv coverage.html /tmp/artifacts
       - store_artifacts:
           path: /tmp/artifacts 
+
+workflows: 
+  main_workflow:
+    filters: 
+      branches:
+        only: 
+          - main
