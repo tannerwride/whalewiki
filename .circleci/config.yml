@@ -1,16 +1,20 @@
 version: '2.1'
 
-jobs:
-  build:
+executors:
+  go-executor: 
     docker:
       - image: cimg/go:1.19.0
+    resource_class: small
+
+jobs:
+  build:
+    executor: go-executor
     steps:
       - checkout
       - run: echo "Placholder job"
   
   code_coverage:
-    docker: 
-       - image: cimg/go:1.19.0
+    executor: go-executor
     steps:
       - run:
           name: "Create a temp directory for artifacts"
