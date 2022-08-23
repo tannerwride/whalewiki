@@ -9,6 +9,7 @@ executors:
     docker:
       - image: cimg/base:2022.08
 
+      # job definitions: 
 jobs:
   build:
     executor: go-executor
