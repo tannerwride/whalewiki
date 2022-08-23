@@ -77,4 +77,5 @@ workflows:
             requires: 
               - code_coverage
               - unit_testing
+            context: docker_push
                 
