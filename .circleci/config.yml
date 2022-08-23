@@ -56,7 +56,7 @@ jobs:
       - run: 
           name: Build and push to Docker Hub
           command: | 
-            docker build -t $DOCKER_HUB_USER_ID/$IMAGE_NAME -t $DOCKER_HUB_USER_ID/$IMAGE_NAME:0.0.1
+            docker build -t tannerwride/whalewiki -t tannerwride/whalewiki:0.0.1 .
             echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER_ID" -- password-stdin
             docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME    
 
