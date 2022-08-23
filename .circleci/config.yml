@@ -5,6 +5,9 @@ executors:
     docker:
       - image: cimg/go:1.19.0
     resource_class: small
+  push-executor: 
+    docker:
+      - image: cimg/base:2022.08
 
 jobs:
   build:
@@ -46,10 +49,16 @@ jobs:
           path: /tmp/test-results         
 
   deploy: 
-    executor: go-executor
+    executor: push-executor
     steps: 
       - checkout
-      - run: echo "place holder job"     
+      - setup_remote_docker
+      - run: 
+          name: Build and push to Docker Hub
+          command: | 
+            docker build -t $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest .
+            echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER_ID" -- password-stdin
+            docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME:latest    
 
 workflows: 
   main_workflow:
@@ -62,9 +71,9 @@ workflows:
             requires:
               - build
         - deploy:
-            filters:
-              branches:
-                only: main
+            #filters:
+            #  branches:
+             #   only: main
             requires: 
               - code_coverage
               - unit_testing
