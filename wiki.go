@@ -18,6 +18,10 @@ func (p *Page) save() error {
 	return os.WriteFile(filename, p.Body, 0600)
 }
 
+func homePage(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Hello, whale wiki!"))
+}
+
 func loadPage(title string) (*Page, error) {
 	filename := title + ".txt"
 	body, err := os.ReadFile(filename)
@@ -56,9 +60,10 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println("Starting server on port 4000")
+	fmt.Println("Starting server on port 8080")
+	http.HandleFunc("/", homePage)
 	http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/edit/", editHandler)
 	http.HandleFunc("/save/", saveHandler)
-	log.Fatal(http.ListenAndServe(":4000", nil))
+	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
 }
