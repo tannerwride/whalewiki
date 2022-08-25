@@ -1,5 +1,8 @@
 version: '2.1'
 
+orbs: 
+    heroku: circleci/heroku@1.2.6
+
 executors:
   go-executor: 
     docker:
@@ -59,7 +62,10 @@ jobs:
           command: | 
             docker build -t tannerwride/whalewiki -t tannerwride/whalewiki:0.0.1 .
             echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USER_ID" --password-stdin
-            docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME    
+            docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME   
+      - heroku/install
+      - heroku/push-docker-image
+      - heroku/release-docker-image 
 
 workflows: 
   main_workflow:
@@ -78,5 +84,7 @@ workflows:
             requires: 
               - code_coverage
               - unit_testing
-            context: docker_push
+            context: 
+              - docker_push
+              - heroku_push
                 
