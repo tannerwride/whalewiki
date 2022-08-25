@@ -78,9 +78,9 @@ workflows:
             requires:
               - build
         - deploy:
-            filters:
-              branches:
-                only: main
+            #filters:
+              #branches:
+                #only: main
             requires: 
               - code_coverage
               - unit_testing
