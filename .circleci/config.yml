@@ -65,7 +65,7 @@ jobs:
             docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME   
       - heroku/install
       - heroku/push-docker-image
-      - heroku/release-docker-image 
+      
 
 workflows: 
   main_workflow:
