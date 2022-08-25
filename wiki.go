@@ -60,10 +60,11 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println("Starting server on port 8080")
+	fmt.Println("Starting server")
+	port := os.Getenv("PORT")
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/edit/", editHandler)
 	http.HandleFunc("/save/", saveHandler)
-	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
+	log.Fatal(http.ListenAndServe(":" + port, nil))
 }
