@@ -71,7 +71,7 @@ jobs:
             else
               echo "Heroku is already installed. No operation was performed."
             fi
-          name: Install Heroku CLI (If not installed)
+            name: Install Heroku CLI (If not installed)
       - run:
           command: heroku container:login
           name: Login to Heroku Docker image registry
@@ -83,8 +83,8 @@ jobs:
           name: Push Docker image to Heroku
           no_output_timeout: 10m
       - run:
-        command: heroku container:login
-        name: Login to Heroku Docker image registry
+          command: heroku container:login
+          name: Login to Heroku Docker image registry
       - run:
           command: |
             heroku container:release -a $HEROKU_APP_NAME \
