@@ -66,31 +66,31 @@ jobs:
       - heroku/install
       - run:
         command: |
-          if [[ $(command -v heroku) == "" ]]; then
-            curl https://cli-assets.heroku.com/install.sh | sh
-          else
-            echo "Heroku is already installed. No operation was performed."
-          fi
-        name: Install Heroku CLI (If not installed)
-    - run:
-        command: heroku container:login
-        name: Login to Heroku Docker image registry
-    - run:
-        command: |+
-          heroku container:push -a $HEROKU_APP_NAME \
-           web
+            if [[ $(command -v heroku) == "" ]]; then
+              curl https://cli-assets.heroku.com/install.sh | sh
+            else
+              echo "Heroku is already installed. No operation was performed."
+            fi
+          name: Install Heroku CLI (If not installed)
+      - run:
+          command: heroku container:login
+          name: Login to Heroku Docker image registry
+      - run:
+          command: |+
+            heroku container:push -a $HEROKU_APP_NAME \
+             web
 
-        name: Push Docker image to Heroku
-        no_output_timeout: 10m
-    - run:
+          name: Push Docker image to Heroku
+          no_output_timeout: 10m
+      - run:
         command: heroku container:login
         name: Login to Heroku Docker image registry
-    - run:
-        command: |
-          heroku container:release -a $HEROKU_APP_NAME \
-          web
-        name: Release Docker image to Heroku
-        no_output_timeout: 10m
+      - run:
+          command: |
+            heroku container:release -a $HEROKU_APP_NAME \
+            web
+          name: Release Docker image to Heroku
+          no_output_timeout: 10m
       
 
 workflows: 
