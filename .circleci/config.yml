@@ -65,14 +65,6 @@ jobs:
             docker push $DOCKER_HUB_USER_ID/$IMAGE_NAME   
       - heroku/install
       - run:
-          command: |
-            if [[ $(command -v heroku) == "" ]]; then
-              curl https://cli-assets.heroku.com/install.sh | sh
-            else
-              echo "Heroku is already installed. No operation was performed."
-            fi
-            name: Install Heroku CLI (If not installed)
-      - run:
           command: heroku container:login
           name: Login to Heroku Docker image registry
       - run:
