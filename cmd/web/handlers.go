@@ -57,3 +57,8 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
     p.save()
     http.Redirect(w, r, "/view/"+title, http.StatusFound)
 }
+
+// ping handler is used to test site, returns ok.
+func ping(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Ok"))
+}
