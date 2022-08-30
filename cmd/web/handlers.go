@@ -1,12 +1,11 @@
-package main 
+package main
 
 import (
-	"fmt"
 	"os"
 	"net/http"
-	"log"
 	"html/template"
 )
+
 // Page is a structure for holding a wiki page, describes how it will be stored.
 type Page struct {
 	Title string
@@ -57,14 +56,4 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
     p := &Page{Title: title, Body: []byte(body)}
     p.save()
     http.Redirect(w, r, "/view/"+title, http.StatusFound)
-}
-
-func main() {
-	fmt.Println("Starting server")
-	port := os.Getenv("PORT")
-	http.HandleFunc("/", homePage)
-	http.HandleFunc("/view/", viewHandler)
-	http.HandleFunc("/edit/", editHandler)
-	http.HandleFunc("/save/", saveHandler)
-	log.Fatal(http.ListenAndServe(":" + port, nil))
 }
