@@ -12,7 +12,8 @@ executors:
     docker:
       - image: cimg/base:2022.08
 
-      # job definitions: 
+# job definitions: 
+
 jobs:
   build:
     executor: go-executor
@@ -24,6 +25,10 @@ jobs:
     executor: go-executor
     steps:
       - checkout
+      - run: 
+          name: "Set Directory"
+          command: |
+            cd cmd/web
       - run:
           name: "Create a temp directory for artifacts"
           command: |
@@ -96,9 +101,9 @@ workflows:
             requires:
               - build
         - deploy:
-            #filters:
-              #branches:
-                #only: main
+            filters:
+              branches:
+                only: main
             requires: 
               - code_coverage
               - unit_testing
